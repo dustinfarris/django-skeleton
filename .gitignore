@@ -1,0 +1,20 @@
+*.db
+.*.swp
+*.pyc
+*.pyo
+*.tar
+*.tgz
+*.tar.gz
+*~
+*\#
+*.bak
+*.log
+{{ project_name }}/settings/__init__.py
+.DS_Store
+env
+/media/
+/static/
+/whoosh_index/
+/xapian/
+/db/
+.sass\-cache

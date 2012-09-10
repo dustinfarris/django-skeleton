@@ -1,0 +1,13 @@
+Django==1.4.1
+psycopg2==2.4.5
+docutils>=0.9.1
+PIL==1.1.7
+raven==2.0.3
+ipython>=0.13
+python-memcached==1.48
+South==0.7.6
+fabric==1.4.3
+Markdown==2.1.1
+easy_thumbnails==1.1
+pyjade>=1.5.2
+django_compressor==1.2
