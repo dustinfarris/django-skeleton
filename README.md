@@ -22,7 +22,7 @@ By default, this Django project requires:
 After git-clone'ing the project, set up a database and a web superuser:
 
 	createuser -s web
-	createdb -T {{ project_name }}
+	createdb {{ project_name }}
 
 Set up your virtualenv:
 
@@ -32,8 +32,11 @@ Set up your virtualenv:
 
 Create the file ```{{ project_name }}/settings/__init__.py```:
 
-    :::python
     from development import *
+    
+Set the executable flag on manage.py:
+
+  chmod 744 manage.py
 	
 Sync the database:
 
