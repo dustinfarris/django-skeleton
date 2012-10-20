@@ -1,0 +1,4 @@
+--requirement=requirements.txt
+
+factory_boy==1.2.0
+-e git+https://github.com/jbalogh/django-nose.git@7fd0132090256e752119f90a3d4568203c486f2e#egg=django_nose

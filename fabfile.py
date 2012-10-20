@@ -60,13 +60,11 @@ def copy_db(path, proj_name, db_name):
   """
   scp's the latest SQL backup from staging.
   """
-  local("scp backups@jhot:/var/backups/%s/%s/sql/%s.sql.gz ." % (proj_name, path, db_name + ".`date +\%Y\%m\%d`"))
+  local("scp backups@jhot:/var/backups/%s/%s/sql/%s.sql.bz2 ." % (proj_name, path, db_name + ".`date +\%Y\%m\%d`"))
 
 
 def load_db(db_name):
-  local("gunzip %s.sql.gz" % (db_name + ".`date +\%Y\%m\%d`"))
-  local("psql %s < %s.sql > /dev/null 2> /dev/null" % (db_name, db_name + ".`date +\%Y\%m\%d`"))
-  # Remove the SQL dump so this is not accidentally committed.
+  local("bzcat %s.sql.bz2 | psql %s <  > /dev/null" % (db_name, db_name + ".`date +\%Y\%m\%d`"))
   local("rm %s.sql*" % (db_name + ".`date +\%Y\%m\%d`"))
 
 

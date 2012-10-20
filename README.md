@@ -21,14 +21,14 @@ By default, this Django project requires:
 
 After git-clone'ing the project, set up a database and a web superuser:
 
-	createuser -s web
-	createdb {{ project_name }}
+  	createuser -s web
+  	createdb {{ project_name }}
 
 Set up your virtualenv:
 
-	virtualenv env
-	source env/bin/activate
-	pip install -r requirements-dev.txt
+  	virtualenv env
+  	source env/bin/activate
+  	pip install -r requirements-development.txt
 
 Create the file ```{{ project_name }}/settings/__init__.py```:
 
@@ -36,17 +36,17 @@ Create the file ```{{ project_name }}/settings/__init__.py```:
     
 Set the executable flag on manage.py:
 
-  chmod 744 manage.py
+    chmod 744 manage.py
 	
 Sync the database:
 
-	./manage.py syncdb --all
-	./manage.py migrate --fake
+  	./manage.py syncdb --all
+  	./manage.py migrate --fake
 	
 Gather static media:
 	
-	./manage.py collectstatic
+  	./manage.py collectstatic
 	
 Run the development server:
 	
-	./manage.py runserver 0.0.0.0:8000
+  	./manage.py runserver 0.0.0.0:8000
