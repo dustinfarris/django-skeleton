@@ -9,5 +9,5 @@ South==0.7.6
 fabric==1.5.2
 Markdown==2.2.0
 easy_thumbnails==1.1
-pyjade==1.8
+pyjade==1.9
 django_compressor==1.2
