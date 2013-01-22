@@ -119,12 +119,6 @@ COMPRESS_PRECOMPILERS = (
   ('text/x-sass', 'sass {infile} {outfile}'),
   ('text/x-scss', 'sass --scss {infile} {outfile}'))
 
-# Fabfile settings
-# STAGING_SERVER_HOST = '12.12.12.12'
-# STAGING_SERVER_USER = 'web'
-# PRODUCTION_SERVER_HOST = '45.45.45.45'
-# PRODUCTION_SERVER_USER = 'web'
-
 LOGGING = {
   'version': 1,
   'disable_existing_loggers': True,
