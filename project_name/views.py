@@ -2,8 +2,12 @@ from django.shortcuts import render
 
 
 def server_error(request):
-  return render(request, '500.jade')
+  response = render(request, '500.jade')
+  response.status_code = 500
+  return response
 
 
 def page_not_found(request):
-  return render(request, '404.jade')
+  response = render(request, '404.jade')
+  response.status_code = 404
+  return response

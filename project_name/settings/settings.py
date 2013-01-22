@@ -2,7 +2,7 @@
 from os.path import abspath, dirname, join
 
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 gettext = lambda s: s
@@ -10,7 +10,7 @@ gettext = lambda s: s
 PROJECT_DIR = abspath(join(dirname(__file__), "../../"))
 
 ADMINS = (
-  ('Dustin Farris', 'admin@dustinfarris.com'),
+  ('Your Name', 'you@example.org'),
 )
 
 MANAGERS = ADMINS
@@ -24,9 +24,7 @@ DATABASES = {
     'USER': 'web',
     'PASSWORD': '',
     'HOST': '',
-    'PORT': '',
-  }
-}
+    'PORT': ''}}
 
 TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
@@ -45,8 +43,7 @@ STATICFILES_DIRS = (join(PROJECT_DIR, '{{ project_name }}', 'static'),)
 STATICFILES_FINDERS = (
   'django.contrib.staticfiles.finders.FileSystemFinder',
   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-  'compressor.finders.CompressorFinder',
-)
+  'compressor.finders.CompressorFinder')
 
 SECRET_KEY = '{{ secret_key }}'
 
@@ -55,9 +52,7 @@ TEMPLATE_LOADERS = (
   ('pyjade.ext.django.Loader',(
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.eggs.Loader',
-  )),
-)
+    'django.template.loaders.eggs.Loader')))
 TEMPLATE_CONTEXT_PROCESSORS = (
   'django.contrib.auth.context_processors.auth',
   'django.core.context_processors.debug',
@@ -67,18 +62,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   'django.core.context_processors.tz',
   'django.core.context_processors.request',
   'django.contrib.messages.context_processors.messages',
-  '{{ project_name }}.context_processors.google',
-)
+  '{{ project_name }}.context_processors.google')
 
 MIDDLEWARE_CLASSES = (
+  'django.middleware.cache.UpdateCacheMiddleware',
   'django.middleware.common.CommonMiddleware',
   'django.contrib.sessions.middleware.SessionMiddleware',
   'django.middleware.csrf.CsrfViewMiddleware',
   'django.contrib.auth.middleware.AuthenticationMiddleware',
   'django.contrib.messages.middleware.MessageMiddleware',
   'django.middleware.clickjacking.XFrameOptionsMiddleware',
-  'raven.contrib.django.middleware.Sentry404CatchMiddleware',
-)
+  'django.middleware.cache.FetchFromCacheMiddleware',
+  'raven.contrib.django.middleware.Sentry404CatchMiddleware')
 
 ROOT_URLCONF = '{{ project_name }}.urls'
 
@@ -95,19 +90,16 @@ INSTALLED_APPS = (
   'django.contrib.admindocs',
   'compressor',
   'easy_thumbnails',
-  'raven.contrib.django',
-  'south',
-)
+  'raven.contrib.django.raven_compat',
+  'south')
 
 CACHES = {
   'default': {
     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
     'LOCATION': '127.0.0.1:11211',
     'KEY_PREFIX': '{{ project_name }}',
-    'TIMEOUT': 300, 
-    'VERSION': 1,
-  }
-}
+    'TIMEOUT': 300,
+    'VERSION': 1}}
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
@@ -123,49 +115,42 @@ COMPRESS_PRECOMPILERS = (
   ('text/coffeescript', 'coffee --compile --stdio'),
   ('text/less', 'lessc {infile} {outfile}'),
   ('text/x-sass', 'sass {infile} {outfile}'),
-  ('text/x-scss', 'sass --scss {infile} {outfile}'),
-)
+  ('text/x-scss', 'sass --scss {infile} {outfile}'))
+
+# Fabfile settings
+# STAGING_SERVER_HOST = '12.12.12.12'
+# STAGING_SERVER_USER = 'web'
+# PRODUCTION_SERVER_HOST = '45.45.45.45'
+# PRODUCTION_SERVER_USER = 'web'
 
 LOGGING = {
   'version': 1,
   'disable_existing_loggers': True,
   'root': {
     'level': 'WARNING',
-    'handlers': ['sentry'],
-  },
+    'handlers': ['sentry']},
   'formatters': {
     'verbose': {
-      'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-    },
-  },
+      'format': ("%(levelname)s %(asctime)s %(module)s %(process)d "
+                 "%(thread)d %(message)s")}},
   'handlers': {
     'sentry': {
       'level': 'ERROR',
-      'class': 'raven.contrib.django.handlers.SentryHandler',
-    },
+      'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler'},
     'console': {
       'level': 'DEBUG',
       'class': 'logging.StreamHandler',
-      'formatter': 'verbose'
-    }
-  },
+      'formatter': 'verbose'}},
   'loggers': {
     'django.db.backends': {
       'level': 'ERROR',
       'handlers': ['console'],
-      'propagate': False,
-    },
+      'propagate': False},
     'raven': {
       'level': 'DEBUG',
       'handlers': ['console'],
-      'propagate': False,
-    },
+      'propagate': False},
     'sentry.errors': {
       'level': 'DEBUG',
       'handlers': ['console'],
-      'propagate': False,
-    },
-  },
-}
-
-RAVEN_CONFIG = {}
+      'propagate': False}}}

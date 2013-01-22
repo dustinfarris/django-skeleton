@@ -6,19 +6,24 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic.simple import direct_to_template
 
 
+repr(handler404)
+repr(handler500)
 handler404 = '{{ project_name }}.views.page_not_found'
 handler500 = '{{ project_name }}.views.server_error'
+
+
 admin.autodiscover()
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+  '',
   url(
     r'^$',
     direct_to_template,
     {'template': 'home.jade'},
     name='home'
   ),
-  
+
   # Admin
   url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
   url(r'^admin/', include(admin.site.urls)),
@@ -30,6 +35,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Debug error pages
 if settings.DEBUG:
-  urlpatterns += patterns('', url(r'^404/$', direct_to_template, {'template': '404.jade'}))
-  urlpatterns += patterns('', url(r'^500/$', direct_to_template, {'template': '500.jade'}))
-  
+  urlpatterns += patterns(
+    '', url(r'^404/$', direct_to_template, {'template': '404.jade'}))
+  urlpatterns += patterns(
+    '', url(r'^500/$', direct_to_template, {'template': '500.jade'}))

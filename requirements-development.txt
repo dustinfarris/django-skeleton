@@ -1,5 +1,3 @@
---requirement=requirements.txt
-
 ipdb>=0.7
 django-debug-toolbar>=0.9.4
-pylint>=0.25
+django-extensions>=1.0.1
