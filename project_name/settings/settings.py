@@ -49,7 +49,7 @@ SECRET_KEY = '{{ secret_key }}'
 
 TEMPLATE_DIRS = (join(PROJECT_DIR, '{{ project_name }}', 'templates'))
 TEMPLATE_LOADERS = (
-  ('pyjade.ext.django.Loader',(
+  ('pyjade.ext.django.Loader', (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.eggs.Loader')))
@@ -109,8 +109,10 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 COMPRESS_OFFLINE = False
 COMPRESS_CSS_HASHING_METHOD = 'hash'
 COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
-COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.CSSMinFilter']
-COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.JSMinFilter',]
+COMPRESS_CSS_FILTERS = [
+  'compressor.filters.css_default.CssAbsoluteFilter',
+  'compressor.filters.cssmin.CSSMinFilter']
+COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.JSMinFilter', ]
 COMPRESS_PRECOMPILERS = (
   ('text/coffeescript', 'coffee --compile --stdio'),
   ('text/less', 'lessc {infile} {outfile}'),
