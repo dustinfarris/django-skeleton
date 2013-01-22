@@ -7,7 +7,7 @@ develop: add-submodules update-submodules
 	echo "from development import *" > {{ project_name }}/settings/__init__.py
 
 add-submodules:
-  git submodule add https://github.com/dustinfarris/fabfile.git
+	git submodule add https://github.com/dustinfarris/fabfile.git
 
 update-submodules:
 	git submodule init
