@@ -1,3 +1,0 @@
-[submodule "fabfile"]
-	path = fabfile
-	url = https://github.com/dustinfarris/fabfile.git
