@@ -1,6 +1,7 @@
 from fabric.api import env
 
 
+env.project_name = '{{ project_name }}'
 env.django_settings_module = '{{ project_name }}.settings'
 env.django_test_settings_module = '{{ project_name }}.settings.test'
 # env.staging_server = {
