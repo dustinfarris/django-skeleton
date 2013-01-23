@@ -1,3 +1,0 @@
-[submodule "project_name/static/stylesheets/bootstrap"]
-	path = project_name/static/stylesheets/bootstrap
-	url = https://github.com/jlong/sass-twitter-bootstrap.git
