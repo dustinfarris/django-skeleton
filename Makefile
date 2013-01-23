@@ -1,4 +1,12 @@
-develop:
+add-submodules:
+	git submodule add https://github.com/jlong/sass-twitter-bootstrap.git {{ project_name }}/static/stylesheets/bootstrap
+	git submodule init
+
+update-submodules:
+	git submodule init
+	git submodule update
+
+develop: update-submodules
 	pip install "flake8>=1.7" --use-mirrors
 	pip install --upgrade -r requirements-development.txt --use-mirrors
 	pip install --upgrade -r requirements-test.txt --use-mirrors
