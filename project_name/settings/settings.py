@@ -92,7 +92,9 @@ INSTALLED_APPS = (
   'easy_thumbnails',
   'raven.contrib.django.raven_compat',
   'south')
-
+SOUTH_MIGRATION_MODULES = {
+  # 'myapp': '{{ project_name }}.migrations.myapp'
+}
 CACHES = {
   'default': {
     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
