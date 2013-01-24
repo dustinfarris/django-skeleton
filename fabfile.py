@@ -2,6 +2,7 @@ from fabric.api import env
 
 
 env.project_name = '{{ project_name }}'
+env.repo_source = 'git@github.com:yournamehere/{{ project_name }}.git'
 env.django_settings_module = '{{ project_name }}.settings'
 env.django_test_settings_module = '{{ project_name }}.settings.test'
 # env.roledefs = {
