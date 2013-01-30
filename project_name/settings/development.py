@@ -6,11 +6,11 @@ TEMPLATE_DEBUG = True
 
 # Turn on debug-level logging for applications (add yours to the list)
 for application in []:
-  LOGGING['loggers'].update({
-    application: {
-      'level': 'DEBUG',
-      'handlers': ['console'],
-      'propagate': False}})
+    LOGGING['loggers'].update({
+      application: {
+        'level': 'DEBUG',
+        'handlers': ['console'],
+        'propagate': False}})
 
 # Disable Raven logging (make test running less noisy)
 del(LOGGING['loggers']['raven'])

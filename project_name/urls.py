@@ -16,17 +16,17 @@ admin.autodiscover()
 
 
 urlpatterns = patterns(
-  '',
-  url(
-    r'^$',
-    direct_to_template,
-    {'template': 'home.jade'},
-    name='home'
-  ),
+    '',
+    url(
+        r'^$',
+        direct_to_template,
+        {'template': 'home.jade'},
+        name='home'
+    ),
 
-  # Admin
-  url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-  url(r'^admin/', include(admin.site.urls)),
+    # Admin
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 )
 
 # Serve media files locally in DEBUG mode
@@ -35,7 +35,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Debug error pages
 if settings.DEBUG:
-  urlpatterns += patterns(
-    '', url(r'^404/$', direct_to_template, {'template': '404.jade'}))
-  urlpatterns += patterns(
-    '', url(r'^500/$', direct_to_template, {'template': '500.jade'}))
+    urlpatterns += patterns(
+        '', url(r'^404/$', direct_to_template, {'template': '404.jade'}))
+    urlpatterns += patterns(
+        '', url(r'^500/$', direct_to_template, {'template': '500.jade'}))
