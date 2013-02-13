@@ -3,10 +3,9 @@ BeautifulSoup==3.2.1
 pytz
 psycopg2==2.4.6
 Pillow==1.7.8
-raven==3.1.4
-ipython>=0.13
+raven==3.1.11
+ipython>=0.13.1
 python-memcached==1.48
 South==0.7.6
-Markdown==2.2.0
 easy_thumbnails==1.2
 django_compressor==1.2
