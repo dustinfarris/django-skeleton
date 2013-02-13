@@ -49,7 +49,7 @@ SECRET_KEY = '{{ secret_key }}'
 
 TEMPLATE_DIRS = (join(PROJECT_DIR, '{{ project_name }}', 'templates'))
 TEMPLATE_LOADERS = (
-    ('pyjade.ext.django.Loader', (
+    ('pyhtml.ext.django.Loader', (
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',
         'django.template.loaders.eggs.Loader')), )

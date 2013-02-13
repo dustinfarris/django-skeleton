@@ -1,8 +1,0 @@
-.paginate
-  if paginator.num_pages > 1
-    if page_obj.has_next
-      span.nextpage
-        a(href='?page=#{page_obj.next_page_number}') &laquo; Previous
-    if page_obj.has_previous
-      span.prevpage
-        a(href='?page=#{page_obj.previous_page_number}') Next &raquo;

@@ -1,0 +1,90 @@
+{% load compress staticfiles %}
+
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>
+  <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<![endif]-->
+<!--[if IE 7]>
+  <html class="no-js lt-ie9 lt-ie8" lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<![endif]-->
+<!--[if IE 8]>
+  <html class="no-js lt-ie9" lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<![endif]-->
+<!--[if gt IE 8]>
+  <!--> <html class="no-js" lang="{{ LANGUAGE_CODE|default:"en-us" }}"> <!--
+<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <link rel="dns-prefetch" href="//ajax.googleapis.com">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>{% block title %}{{ project_name }}{% endblock title %}</title>
+  {% block meta %}{% endblock meta %}
+  <meta name="description" content="{% block description %}{% endblock %}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="shortcut icon" href="{% static 'favicon.png' %}">
+
+  {% block css %}
+    {% compress css %}
+      <link
+        href="{% static 'stylesheets/main.scss' %}"
+        rel="stylesheet"
+        type="text/x-scss">
+    {% endcompress %}
+  {% endblock css %}
+
+  {% block js_header %}
+    {% compress js %}
+      <script src="{% static 'javascripts/lib/modernizr-2.6.2.min.js' %}"></script>
+    {% endcompress %}
+  {% endblock js_header %}
+</head>
+
+<body itemscope itemtype='http://schema.org/WebPage'>
+  <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong>
+      browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
+      or <a href="http://www.google.com/chromeframe/?redirect=true">activate
+      Google Chrome Frame</a> to improve your experience.</p>
+  <![endif]-->
+
+  <header role="banner">
+    {% block header %}
+      {% include "_header.html" %}
+    {% endblock header %}
+  </header>
+
+  <div id="main" role="main">
+    {% block content %}{% endblock content %}
+  </div>
+
+  <footer role="contentinfo">
+    {% block footer %}
+      {% include "_footer.html" %}
+    {% endblock footer %}
+  </footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+    window.jQuery || document.write(
+      '<script src="{{ STATIC_URL }}javascripts/lib/jquery-1.9.1.min.js"><\/script>')
+  </script>
+
+  {% block js %}
+    {% compress js %}
+      <script src="{% static 'javascripts/main.js' %}"></script>
+    {% endcompress %}
+  {% endblock js %}
+
+  {% if not debug and GOOGLE_UA %}
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  {% endif %}
+</body>
+</html>

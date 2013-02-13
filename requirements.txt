@@ -9,5 +9,4 @@ python-memcached==1.48
 South==0.7.6
 Markdown==2.2.0
 easy_thumbnails==1.2
-pyjade==1.9
 django_compressor==1.2

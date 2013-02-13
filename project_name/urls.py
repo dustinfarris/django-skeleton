@@ -20,7 +20,7 @@ urlpatterns = patterns(
     url(
         r'^$',
         direct_to_template,
-        {'template': 'home.jade'},
+        {'template': 'home.html'},
         name='home'
     ),
 
@@ -36,6 +36,6 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Debug error pages
 if settings.DEBUG:
     urlpatterns += patterns(
-        '', url(r'^404/$', direct_to_template, {'template': '404.jade'}))
+        '', url(r'^404/$', direct_to_template, {'template': '404.html'}))
     urlpatterns += patterns(
-        '', url(r'^500/$', direct_to_template, {'template': '500.jade'}))
+        '', url(r'^500/$', direct_to_template, {'template': '500.html'}))
