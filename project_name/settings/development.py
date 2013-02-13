@@ -22,6 +22,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Uncomment the following to test django_compressor's output in development
 # COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = False
 
 # This effectively disables any server side caching in development
 CACHES['default']['BACKEND'] = 'django.core.cache.backends.dummy.DummyCache'

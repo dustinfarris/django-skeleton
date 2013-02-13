@@ -49,10 +49,12 @@ SECRET_KEY = '{{ secret_key }}'
 
 TEMPLATE_DIRS = (join(PROJECT_DIR, '{{ project_name }}', 'templates'))
 TEMPLATE_LOADERS = (
-    ('pyhtml.ext.django.Loader', (
+    ('django.template.loaders.cached.Loader', (
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',
-        'django.template.loaders.eggs.Loader')), )
+        'django.template.loaders.eggs.Loader',
+    )), 
+)
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -108,7 +110,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 # Google Analytics UA, e.g. UA-XXXXXXX
 #GOOGLE_UA = ''
 
-COMPRESS_OFFLINE = False
+COMPRESS_OFFLINE = True
 COMPRESS_CSS_HASHING_METHOD = 'hash'
 COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 COMPRESS_CSS_FILTERS = [

@@ -9,3 +9,4 @@ python-memcached==1.48
 South==0.7.6
 easy_thumbnails==1.2
 django_compressor==1.2
+django-rax
