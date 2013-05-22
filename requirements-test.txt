@@ -1,2 +1,0 @@
-redrover
-factory_boy==1.2.0

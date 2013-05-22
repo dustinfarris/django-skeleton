@@ -1,4 +1,4 @@
-from settings import *
+from {{ project_name }}.settings.settings import *
 
 
 DEBUG = True
@@ -26,6 +26,12 @@ COMPRESS_OFFLINE = False
 
 # This effectively disables any server side caching in development
 CACHES['default']['BACKEND'] = 'django.core.cache.backends.dummy.DummyCache'
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+)
 
 INSTALLED_APPS += ('debug_toolbar',)
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)

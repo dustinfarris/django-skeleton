@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url, handler404, handler500
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView
 
 
 repr(handler404)
@@ -19,8 +19,7 @@ urlpatterns = patterns(
     '',
     url(
         r'^$',
-        direct_to_template,
-        {'template': 'home.html'},
+        TemplateView.as_view(template_name='home.html'),
         name='home'
     ),
 
@@ -36,6 +35,6 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Debug error pages
 if settings.DEBUG:
     urlpatterns += patterns(
-        '', url(r'^404/$', direct_to_template, {'template': '404.html'}))
+        '', url(r'^404/$', TemplateView.as_view(template_name='404.html')))
     urlpatterns += patterns(
-        '', url(r'^500/$', direct_to_template, {'template': '500.html'}))
+        '', url(r'^500/$', TemplateView.as_view(template_name='500.html')))

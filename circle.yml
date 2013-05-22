@@ -1,0 +1,20 @@
+machine:
+  environment:
+    PYTHONPATH: $HOME/{{ project_name }}/src
+
+dependencies:
+  override:
+    - make develop
+  post:
+    - ln -sf /usr/lib/python2.7/dist-packages/xapian $VIRTUAL_ENV/lib/python2.7/site-packages/.
+
+database:
+  post:
+    - createuser -s -U postgres web
+    - createdb -U postgres {{ project_name }}
+
+test:
+  pre:
+    - touch src/{{ project_name }}/settings/__init__.py
+  override:
+    - make test

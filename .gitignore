@@ -11,6 +11,8 @@
 *.log
 {{ project_name }}/settings/__init__.py
 .DS_Store
+.coverage
+/cover/
 env
 /media/
 /static/
@@ -18,3 +20,4 @@ env
 /xapian/
 /db/
 .sass\-cache
+/node_modules/
