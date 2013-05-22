@@ -74,7 +74,7 @@
 
   {% block js %}
     {% compress js %}
-      <script src="{% static 'javascripts/main.js' %}"></script>
+      <script type="text/coffeescript" src="{% static 'javascripts/main.coffee' %}"></script>
     {% endcompress %}
   {% endblock js %}
 

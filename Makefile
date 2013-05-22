@@ -1,7 +1,7 @@
 NPM_ROOT = node_modules
 
 add-submodules:
-	git submodule add https://github.com/jlong/sass-twitter-bootstrap.git {{ project_name }}/static/stylesheets/bootstrap
+	git submodule add https://github.com/jlong/sass-twitter-bootstrap.git src/{{ project_name }}/static/stylesheets/bootstrap
 	git submodule init
 
 update-submodules:
