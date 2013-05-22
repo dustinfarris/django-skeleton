@@ -1,3 +1,5 @@
+NPM_ROOT = node_modules
+
 add-submodules:
 	git submodule add https://github.com/jlong/sass-twitter-bootstrap.git {{ project_name }}/static/stylesheets/bootstrap
 	git submodule init
@@ -16,6 +18,11 @@ develop: update-submodules
 	echo "from {{ project_name }}.settings.development import *" > src/{{ project_name }}/settings/__init__.py
 
 test: lint test-coffee test-python test-behave
+
+test-coffee:
+	@echo "Running CoffeeScript tests"
+	${NPM_ROOT}/mocha/bin/mocha --compilers coffee:coffee-script tests/coffee/spec
+	@echo ""
 
 test-python: test-models test-unit test-integration
 
