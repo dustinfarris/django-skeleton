@@ -13,7 +13,7 @@ develop: update-submodules
 	pip install --upgrade -r requirements/test.txt --use-mirrors
 	pip install --upgrade -r requirements/core.txt --use-mirrors
 	easy_install readline
-	echo "from industrymaps.settings.development import *" > src/industrymaps/settings/__init__.py
+	echo "from {{ project_name }}.settings.development import *" > src/industrymaps/settings/__init__.py
 
 test: lint test-coffee test-python test-behave
 
