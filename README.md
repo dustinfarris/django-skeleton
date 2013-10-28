@@ -12,7 +12,8 @@ brew install postgresql
 createuser -s web
 brew install memcached
 brew install python3
-pip3 install virtualenvwrapper
+pip3 install --upgrade virtualenvwrapper
+pip3 install --upgrade Django
 ```
 
 If installing virtualenvwrapper for the first time, you will need to add the following to `~/.bash_profile`:
