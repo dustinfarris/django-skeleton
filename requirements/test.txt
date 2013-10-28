@@ -1,7 +1,1 @@
-redrover
-selenium==2.32.0
-factory_boy==2.0.2
-mock==1.0.1
-exam
-behave==1.2.2
-coverage
+factory_boy==2.2.1

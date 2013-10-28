@@ -1,65 +1,46 @@
-NPM_ROOT = node_modules
+test: lint test-python
 
-add-submodules:
-	git submodule add https://github.com/jlong/sass-twitter-bootstrap.git src/{{ project_name }}/static/stylesheets/bootstrap
-	git submodule init
+lint:
+	@echo "Linting Python files"
+	flake8 --ignore=E121,W404,F403,E501 --exclude=./env/*,./venv/*,migrations,.git . || exit 1
+	@echo ""
+
+test-python: test-unit test-integration
+
+test-unit:
+	@echo "Running Python unit tests"
+	python manage.py test --settings={{ project_name }}.settings.test tests.unit
+	@echo ""
+
+test-integration:
+	@echo "Running Python integration tests"
+	python manage.py test --settings={{ project_name }}.settings.test tests.integration
+	@echo ""
+	
+initdb:
+	python manage.py syncdb --all --noinput
+	python manage.py migrate --fake
 
 update-submodules:
 	git submodule init
 	git submodule update
 
-develop: update-submodules
-	npm install
-	pip install "flake8>=1.7" --use-mirrors
-	pip install --upgrade -r requirements/development.txt --use-mirrors
-	pip install --upgrade -r requirements/test.txt --use-mirrors
-	pip install --upgrade -r requirements/core.txt --use-mirrors
-	easy_install readline
-	echo "from {{ project_name }}.settings.development import *" > src/{{ project_name }}/settings/__init__.py
+update: update-submodules
+	python manage.py migrate
+	python manage.py collectstatic --noinput
 
-test: lint test-coffee test-python test-behave
+install-core:
+	pip install --upgrade --use-mirrors setuptools
+	easy_install -U Pillow
+	pip install --upgrade --use-mirrors -r requirements/core.txt
 
-test-coffee:
-	@echo "Running CoffeeScript tests"
-	${NPM_ROOT}/mocha/bin/mocha --compilers coffee:coffee-script tests/coffee/spec
-	@echo ""
+install-development:
+	pip install --upgrade --use-mirrors -r requirements/development.txt
 
-test-python: test-models test-unit test-integration
+install-test:
+	pip install --upgrade --use-mirrors flake8
+	pip install --upgrade --use-mirrors -r requirements/test.txt
 
-test-models:
-	@echo "Running Django model tests"
-	python manage.py test tests/models --logging-filter=-south || exit 1
-	@echo ""
+install: install-core install-development install-test
+	echo "from {{ project_name }}.settings.development import *" > app/{{ project_name }}/settings/__init__.py
 
-test-unit:
-	@echo "Running Python unit tests"
-	python manage.py test tests/unit --with-doctest --doctest-options=+ELLIPSIS --logging-filter=-south || exit 1
-	@echo ""
-
-test-integration:
-	@echo "Running Python integration tests"
-	python manage.py test tests/integration --logging-filter=-south || exit 1
-	@echo ""
-
-test-behave:
-	@echo "Running Functional behavior tests"
-	behave tests/functional
-	@echo ""
-
-test-wip:
-	@echo "Runing Functional behavior tests for 'works in progress'"
-	behave -w tests/functional
-	@echo ""
-
-test-coverage:
-	@echo "Running model, unit, and integration tests with coverage enabled"
-	python manage.py test --with-doctest --doctest-options=+ELLIPSIS --with-coverage --cover-erase --cover-package=industrymaps,maps,accounts,src --cover-html tests src
-	open cover/index.html
-	@echo ""
-
-lint: lint-python
-
-lint-python:
-	@echo "Linting Python files"
-	flake8 --ignore=E121,W404,F403 --exclude=./env/*,./venv/*,migrations,.git,./tests/functional/features,./tests/functional/steps . || exit 1
-	@echo ""

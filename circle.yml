@@ -1,20 +1,13 @@
 machine:
   environment:
-    PYTHONPATH: $HOME/{{ project_name }}/src
+    PYTHONPATH: $HOME/{{ project_name }}/app
+  python:
+    version: 3.3.1
 
 dependencies:
   override:
-    - make develop
-  post:
-    - ln -sf /usr/lib/python2.7/dist-packages/xapian $VIRTUAL_ENV/lib/python2.7/site-packages/.
-
-database:
-  post:
-    - createuser -s -U postgres web
-    - createdb -U postgres {{ project_name }}
+    - make install
 
 test:
-  pre:
-    - touch src/{{ project_name }}/settings/__init__.py
   override:
     - make test
