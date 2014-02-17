@@ -1,13 +1,25 @@
 machine:
-  environment:
-    PYTHONPATH: $HOME/{{ project_name }}/app
-  python:
-    version: 3.3.1
+    python:
+        version: 3.3.2
 
 dependencies:
-  override:
-    - make install
+    override:
+        - make develop
 
 test:
-  override:
-    - make test
+    override:
+        - py.test tests
+
+deployment:
+    staging:
+        branch: staging
+        commands:
+            - PYENV_VERSION=2.7.6 pyenv exec pip install fabric
+            - PYENV_VERSION=2.7.6 pyenv exec fab staging deploy:
+                timeout: 600
+    production:
+        branch: master
+        commands:
+            - PYENV_VERSION=2.7.6 pyenv exec pip install fabric
+            - PYENV_VERSION=2.7.6 pyenv exec fab production deploy:
+                timeout: 600

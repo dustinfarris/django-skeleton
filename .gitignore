@@ -9,11 +9,15 @@
 *\#
 *.bak
 *.log
+*.sqlite3
+*.egg-info
+*.egg
 {{ project_name }}/settings/__init__.py
 .DS_Store
 .coverage
 /cover/
 env
+venv
 /media/
 /static/
 /whoosh_index/
@@ -21,3 +25,6 @@ env
 /db/
 .sass\-cache
 /node_modules/
+celerybeat-schedule
+/htmlcov
+/docs/_build

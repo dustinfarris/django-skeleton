@@ -4,7 +4,7 @@ from fabric.colors import *
 
 
 @task
-@roles('db')
+@roles('app')
 def db():
     date_format_str = run('date +\%Y\%m\%d')
     filename = '%s.%s.sql.bz2' % (env.application, date_format_str)

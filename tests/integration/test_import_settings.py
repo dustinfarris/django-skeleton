@@ -1,10 +1,10 @@
-from tests.utils import TestCase
+from django.test import TestCase
 
 
 class SettingsImportTest(TestCase):
     """
-    Check that we can import our own settings and that DEBUG is False
-    when testing.
+    We should be able to import our own settings, and DEBUG should
+    be False.
     """
     def test_import_settings(self):
         from django.conf import settings

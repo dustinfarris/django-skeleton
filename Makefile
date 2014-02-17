@@ -1,46 +1,31 @@
-test: lint test-python
+develop: install
+	pip install -q "file://`pwd`#egg={{ project_name }}[dev]"
+	pip install -q "file://`pwd`#egg={{ project_name }}[tests]"
+	echo "from .server import *" > {{ project_name }}/settings/__init__.py
 
-lint:
-	@echo "Linting Python files"
-	flake8 --ignore=E121,W404,F403,E501 --exclude=./env/*,./venv/*,migrations,.git . || exit 1
-	@echo ""
+install:
+	pip install -q -e .
 
-test-python: test-unit test-integration
-
-test-unit:
-	@echo "Running Python unit tests"
-	python manage.py test --settings={{ project_name }}.settings.test tests.unit
-	@echo ""
-
-test-integration:
-	@echo "Running Python integration tests"
-	python manage.py test --settings={{ project_name }}.settings.test tests.integration
-	@echo ""
-	
 initdb:
 	python manage.py syncdb --all --noinput
 	python manage.py migrate --fake
 
-update-submodules:
-	git submodule init
-	git submodule update
-
-update: update-submodules
+update:
 	python manage.py migrate
-	python manage.py collectstatic --noinput
+	python manage.py collectstatic -v0 --noinput
 
-install-core:
-	pip install --upgrade --use-mirrors setuptools
-	easy_install -U Pillow
-	pip install --upgrade --use-mirrors -r requirements/core.txt
+test: develop lint test-python
 
-install-development:
-	pip install --upgrade --use-mirrors -r requirements/development.txt
+lint:
+	@echo "Linting Python files"
+	flake8 {{ project_name }}
+	@echo ""
 
-install-test:
-	pip install --upgrade --use-mirrors flake8
-	pip install --upgrade --use-mirrors -r requirements/test.txt
+test-python:
+	@echo "Running Python tests"
+	python setup.py -q test || exit 1
+	@echo ""
 
-install: install-core install-development install-test
-	echo "from {{ project_name }}.settings.development import *" > app/{{ project_name }}/settings/__init__.py
-
+coverage: develop
+	py.test --cov={{ project_name }} --cov-report=html
+	open htmlcov/index.html

@@ -1,46 +1,59 @@
 # {{ project_name }}
 
-Very basic Django skeleton project.
+A very basic Django skeleton project.
 
-## Prerequisites
 
-You will need [homebrew][] to install these:
+## Development
+
+### Prerequisites
+
+You will need [homebrew][] and the following:
+
+* Python (>=3.3 preferred)
+* Memcached
+* PostgreSQL
+* Redis (for Celery results)
+* virutalenvwrapper
+* Django
 
 ```console
 brew update && brew upgrade
-brew install postgresql
+brew install python3 postgresql memcached
 createuser -s web
-brew install memcached
-brew install python3
-pip3 install --upgrade virtualenvwrapper
-pip3 install --upgrade Django
+pip3 install --upgrade Django virtualenvwrapper
 ```
 
-If installing virtualenvwrapper for the first time, you will need to add the following to `~/.bash_profile`:
+To make virtualenvwrapper use your homebrewed Python, add the following to your
+`~/.bash_profile`:
 
 ```bash
 export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python3"
 source "/usr/local/bin/virtualenvwrapper.sh"
 ```
 
-And here's a handy alias to drop into `~/.profile` or `~/.bashrc` (whichever you use):
+And here's a handy alias to drop into your `~/.profile` or `~/.bashrc`,
+whichever you prefer:
 
 ```bash
-alias mkenv='mkvirtualenv `basename $PWD` && setvirtualenvproject && add2virtualenv app'
+alias mkenv='mkvirtualenv `basename $PWD` && setvirtualenvproject'
 ```
 
-## Creating a new project
+### Creating a new project
 
-Create a new Django project using this template:
+Create a new Django project using the django-skeleton template:
 
 ```console
-django-admin.py startproject --template=https://github.com/dustinfarris/django-skeleton/zipball/master --extension=py,md --name=Makefile,.gitignore,circle.yml,package.json <projectname>
+django-admin.py startproject \
+--template=https://github.com/dustinfarris/django-skeleton/archive/master.zip \
+--extension=py,md \
+--name=Makefile,.gitignore,.coveragerc \
+myproject
 ```
 
-Initial commit:
+Perform an initial commit:
 
 ```console
-cd <projectname>
+cd myproject
 git init
 git add -A
 git commit -m "Initial commit"
@@ -50,31 +63,29 @@ Set up your environment (using the alias from earlier):
 
 ```console
 mkenv
-make install
-```
-
-Add your repo information to fabfile (for automatic deploys, refreshes, etc..):
-
-```console
-vi fabfile/__init__.py
+make develop
 ```
 
 All tests should pass:
 
 ```console
-make
+make test
 ```
 
 Create and sync your database:
 
 ```console
-createdb <projectname>
-python manage.py syncdb --all
-python manage.py migrate --fake
+createdb myproject
+make initdb
+```
+
+Run the Django server to start development:
+
+```console
 python manage.py runserver 0.0.0.0:8000
 ```
 
-Done!
+And you're off to the races!
 
 
-[homebrew]: http://brew.sh
+[homebrew]: http://brew.sh/

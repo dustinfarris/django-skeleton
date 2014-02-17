@@ -3,15 +3,23 @@ import random
 from fabric.api import *
 
 
-default_settings = """from {application}.settings.production import *
+default_settings = """from .server import *
 
 DEBUG = False
+TEMPLATE_DEBUG = False
 SECRET_KEY = '{secret_key}'
 ALLOWED_HOSTS = ['{hostname}']
+
+URL_PREFIX = '{hostname}'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+CELERY_ALWAYS_EAGER = False
+
+DATABASES['default']['HOST'] = '{db_host}'
+CELERY_RESULT_BACKEND = 'redis://{db_host}'
 """
 
 
-@roles('db')
+@roles('app')
 def init_db():
     run('createdb %s' % env.database)
 
@@ -27,17 +35,14 @@ def init_app():
         default_settings.format(
             application=env.application,
             secret_key=secret_key,
-            hostname=env.hostname),
+            hostname=env.hostname,
+            db_host=env.db_host),
         env.remote_settings_path))
     run('echo "#!/bin/sh" > %s/%s.sh' % (env.remote_scripts_dir, env.application))
     execute('deploy.full', initdb=True, with_restart=False)
     server_configuration = (
-        'ln -sfn {base}/config/apache/{hostname}.conf /etc/apache2/sites-available/.',
-        'ln -sfn /etc/apache2/sites-available/{hostname}.conf /etc/apache2/sites-enabled/.',
         'ln -sfn {base}/config/nginx/{hostname}.conf /etc/nginx/sites-available/.',
         'ln -sfn /etc/nginx/sites-available/{hostname}.conf /etc/nginx/sites-enabled/.',
-        'mkdir -p /etc/nginx/htpasswd',
-        'htpasswd -bc /etc/nginx/htpasswd/{app} {app} {app}',
     )
     for command in server_configuration:
         sudo(
@@ -84,7 +89,7 @@ def full(initdb=False, with_restart=True):
     system_now = run('date +\%Y\%m\%d\%H\%M\%S')
     deploy_path = '%s/%s_%s' % (env.remote_sites_dir, env.application, system_now)
 
-    run('git clone %s %s' % (env.repo_url, deploy_path))
+    run('git clone -q %s %s' % (env.repo_url, deploy_path))
 
     with cd(deploy_path):
         run('git checkout %s' % env.branch)
@@ -94,7 +99,7 @@ def full(initdb=False, with_restart=True):
 
         with prefix('source env/bin/activate'):
             with shell_env(LANG='en_US.UTF-8'):
-                run('make install-core')
+                run('make install')
             if initdb is True:
                 run('make initdb')
             run('make update')

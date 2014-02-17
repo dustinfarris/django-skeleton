@@ -18,21 +18,21 @@ env.staging_branch = 'staging'
 
 @task
 def staging():
-    env.hostname = 'staging.api.{{ project_name }}.com'
+    env.hostname = 'stage.{{ project_name }}.com'
+    env.db_host = 'localhost'
     env.branch = env.staging_branch
     env.roledefs = {
-        'app': ['web@192.111.11.11'],
-        'db': ['web@192.111.11.11'],
+        'app': ['web@111.111.11.11'],
     }
 
 
 @task
 def production():
-    env.hostname = 'api.{{ project_name }}.com'
+    env.hostname = '{{ project_name }}.com'
+    env.db_host = 'localhost'
     env.branch = env.production_branch
     env.roledefs = {
-        'app': ['web@192.222.22.22'],
-        'db': ['web@192.222.22.22'],
+        'app': ['web@222.222.22.22'],
     }
 
 
@@ -44,7 +44,7 @@ env.remote_media_dir = '%s/_media/%s' % (env.remote_home_dir, env.application)
 env.remote_scripts_dir = '%s/_scripts' % env.remote_home_dir
 env.remote_backups_dir = '/var/backups/%s' % env.application
 env.remote_settings_path = "%s/%s.py" % (env.remote_settings_dir, env.application)
-env.relative_settings_path = 'app/%s/settings/__init__.py' % env.application
+env.relative_settings_path = '%s/settings/__init__.py' % env.application
 
 
 # DATABASE
